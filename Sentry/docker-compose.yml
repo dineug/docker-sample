@@ -1,0 +1,62 @@
+version: '3'
+services:
+  redis:
+    image: 'redis:latest'
+    restart: always
+    container_name: dineug-sentry-redis
+
+  postgres:
+    image: 'postgres:latest'
+    restart: always
+    container_name: dineug-sentry-postgres
+    environment:
+      - POSTGRES_USER=sentry
+      - POSTGRES_PASSWORD=sentry
+    volumes:
+      - '/home/dineug/docker/volume/sentry_postgres:/var/lib/postgresql/data'
+
+  sentry:
+    image: 'sentry:latest'
+    restart: always
+    container_name: dineug-sentry
+    links:
+      - redis
+      - postgres
+    ports:
+      - '9000:9000'
+    environment:
+      - SENTRY_SECRET_KEY=###secret-key###
+      - SENTRY_REDIS_HOST=redis
+      - SENTRY_POSTGRES_HOST=postgres
+      - SENTRY_DB_USER=sentry
+      - SENTRY_DB_PASSWORD=sentry
+
+  cron:
+    image: 'sentry:latest'
+    restart: always
+    container_name: dineug-sentry-cron
+    command: "run cron"
+    links:
+      - redis
+      - postgres
+    environment:
+      - SENTRY_SECRET_KEY=###secret-key###
+      - SENTRY_REDIS_HOST=redis
+      - SENTRY_POSTGRES_HOST=postgres
+      - SENTRY_DB_USER=sentry
+      - SENTRY_DB_PASSWORD=sentry
+
+  worker:
+    image: 'sentry:latest'
+    restart: always
+    container_name: dineug-sentry-worker
+    command: "run worker"
+    links:
+      - redis
+      - postgres
+    environment:
+      - SENTRY_SECRET_KEY=###secret-key###
+      - SENTRY_REDIS_HOST=redis
+      - SENTRY_POSTGRES_HOST=postgres
+      - SENTRY_DB_USER=sentry
+      - SENTRY_DB_PASSWORD=sentry
