@@ -1,0 +1,5 @@
+version: '3'
+services:
+  puppeteer:
+    image: 'dineug/puppeteer-app:dev'
+    build: .
