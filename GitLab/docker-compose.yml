@@ -15,3 +15,5 @@ services:
       - '/home/dineug/docker/volume/gitlab/logs:/var/log/gitlab'
       - '/home/dineug/docker/volume/gitlab/data:/var/opt/gitlab'
       - '/home/dineug/docker/volume/gitlab/backups:/var/opt/gitlab/backups'
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/etc/timezone:/etc/timezone:ro'
