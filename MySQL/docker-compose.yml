@@ -11,5 +11,3 @@ services:
     volumes:
       - '/home/dineug/docker/volume/mysql/data:/var/lib/mysql'
       - '/home/dineug/docker/volume/mysql/conf:/etc/mysql/conf.d'
-      - '/etc/localtime:/etc/localtime:ro'
-      - '/etc/timezone:/etc/timezone:ro'
