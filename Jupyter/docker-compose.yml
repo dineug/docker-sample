@@ -1,10 +1,10 @@
 version: '3'
 services:
   jupyter:
-    image: 'tensorflow/tensorflow:latest-gpu-py3-jupyter'
+    image: 'tensorflow/tensorflow:2.0.0-gpu-py3-jupyter'
     restart: always
     container_name: dineug-jupyter
     ports:
       - '8888:8888'
     volumes:
-      - '/home/dineug/docker/volume/jupyter:/notebooks'
+      - '/home/dineug/docker/volume/jupyter:/tf/notebooks'
