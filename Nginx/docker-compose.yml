@@ -1,5 +1,5 @@
-version: '3'
+version: '3.7'
 services:
   nginx:
-    image: 'dineug/nginx:dev'
+    image: dineug/nginx:dev
     build: .

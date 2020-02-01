@@ -1,19 +1,18 @@
-version: '3'
+version: '3.7'
 services:
   gitlab:
-    image: 'gitlab/gitlab-ce:latest'
+    image: gitlab/gitlab-ce:latest
     restart: always
-    hostname: 'gitlab.dineug.com'
-    container_name: dineug-gitlab
+    hostname: gitlab.dineug.com
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://gitlab.dineug.com'
     ports:
-      - '80:80'
+      - 80:80
     volumes:
-      - '/home/dineug/docker/volume/gitlab/config:/etc/gitlab'
-      - '/home/dineug/docker/volume/gitlab/logs:/var/log/gitlab'
-      - '/home/dineug/docker/volume/gitlab/data:/var/opt/gitlab'
-      - '/home/dineug/docker/volume/gitlab/backups:/var/opt/gitlab/backups'
-      - '/etc/localtime:/etc/localtime:ro'
-      - '/etc/timezone:/etc/timezone:ro'
+      - ./config:/etc/gitlab
+      - ./logs:/var/log/gitlab
+      - ./data:/var/opt/gitlab
+      - ./backups:/var/opt/gitlab/backups
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro

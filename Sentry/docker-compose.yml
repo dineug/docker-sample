@@ -1,32 +1,29 @@
-version: '3'
+version: '3.7'
 services:
   redis:
-    image: 'redis:latest'
+    image: redis:latest
     restart: always
-    container_name: dineug-sentry-redis
 
   postgres:
-    image: 'postgres:latest'
+    image: postgres:latest
     restart: always
-    container_name: dineug-sentry-postgres
     environment:
       - POSTGRES_USER=sentry
       - POSTGRES_PASSWORD=sentry
     volumes:
-      - '/home/dineug/docker/volume/sentry_postgres:/var/lib/postgresql/data'
+      - ./postgres:/var/lib/postgresql/data
 
   sentry:
-    image: 'sentry:latest'
+    image: sentry:latest
     restart: always
-    container_name: dineug-sentry
     links:
       - redis
       - postgres
     ports:
-      - '9000:9000'
+      - 9000:9000
     volumes:
-      - '/etc/localtime:/etc/localtime:ro'
-      - '/etc/timezone:/etc/timezone:ro'
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     environment:
       - SENTRY_SECRET_KEY=###secret-key###
       - SENTRY_REDIS_HOST=redis
@@ -35,9 +32,8 @@ services:
       - SENTRY_DB_PASSWORD=sentry
 
   cron:
-    image: 'sentry:latest'
+    image: sentry:latest
     restart: always
-    container_name: dineug-sentry-cron
     command: "run cron"
     links:
       - redis
@@ -50,9 +46,8 @@ services:
       - SENTRY_DB_PASSWORD=sentry
 
   worker:
-    image: 'sentry:latest'
+    image: sentry:latest
     restart: always
-    container_name: dineug-sentry-worker
     command: "run worker"
     links:
       - redis

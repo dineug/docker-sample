@@ -1,14 +1,13 @@
-version: '3'
+version: '3.7'
 services:
   jenkins:
-    image: 'jenkins-docker:lts'
+    image: jenkins-docker:lts
     restart: always
     build: .
-    container_name: dineug-jenkins
     ports:
-      - '8080:8080'
+      - 8080:8080
     volumes:
-      - '/home/dineug/docker/volume/jenkins_home:/var/jenkins_home'
-      - '/var/run/docker.sock:/var/run/docker.sock:ro'
-      - '/etc/localtime:/etc/localtime:ro'
-      - '/etc/timezone:/etc/timezone:ro'
+      - ./jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
